@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Player &mdash; PythonBot SDK v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '1.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PythonBot SDK v1.0 documentation" href="index.html" />
+    <link rel="next" title="PythonBot SDK" href="events.html" />
+    <link rel="prev" title="SubspaceBot" href="subspacebot.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="events.html" title="PythonBot SDK"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="subspacebot.html" title="SubspaceBot"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PythonBot SDK v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-SubspaceBot">
+<h1>Player<a class="headerlink" href="#module-SubspaceBot" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="SubspaceBot.Player">
+<em class="property">class </em><tt class="descclassname">SubspaceBot.</tt><tt class="descname">Player</tt><big>(</big><em>name</em>, <em>squad</em>, <em>pid</em>, <em>ship</em>, <em>freq</em><big>)</big><a class="headerlink" href="#SubspaceBot.Player" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class that represents the a Player.  All values are read-only to bots except
+for the &#8216;player_info&#8217; variable that is reserved for bot&#8217;s per-player data storage.</p>
+<p>The x_pos, y_pos, x_vel, y_vel, and status_Xxx are only as recent as the last_pos_update_tick
+timestamp.  Position updates are only received for players on the bot&#8217;s radar, except
+in the case where a player first enters a safe area.</p>
+<dl class="attribute">
+<dt id="SubspaceBot.Player.freq">
+<tt class="descname">freq</tt><a class="headerlink" href="#SubspaceBot.Player.freq" title="Permalink to this definition">¶</a></dt>
+<dd>The player&#8217;s current frequency.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.last_pos_update_tick">
+<tt class="descname">last_pos_update_tick</tt><a class="headerlink" href="#SubspaceBot.Player.last_pos_update_tick" title="Permalink to this definition">¶</a></dt>
+<dd>The tickstamp, in hundreths of seconds, of when the player&#8217;s last position update was received.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.name">
+<tt class="descname">name</tt><a class="headerlink" href="#SubspaceBot.Player.name" title="Permalink to this definition">¶</a></dt>
+<dd>The player&#8217;s name</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.pid">
+<tt class="descname">pid</tt><a class="headerlink" href="#SubspaceBot.Player.pid" title="Permalink to this definition">¶</a></dt>
+<dd>The player&#8217;s PID, unique for all players in the arena. Invalid after EVENT_LEAVE.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.player_info">
+<tt class="descname">player_info</tt><a class="headerlink" href="#SubspaceBot.Player.player_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reserved for a bot implementation&#8217;s own use.  Should be set during EVENT_ENTER.</p>
+<p>For example:</p>
+<div class="highlight-python"><pre>class PlayerInfo:
+        def __init__(self):
+                self.kill_count = 0
+                self.death_count = 0
+
+Then in EVENT_ENTER:
+        event.player.player_info = PlayerInfo()
+
+And in EVENT_KILL:
+        event.killer.player_info.kill_count += 1
+        event.killed.player_info.death_count += 1</pre>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.ship">
+<tt class="descname">ship</tt><a class="headerlink" href="#SubspaceBot.Player.ship" title="Permalink to this definition">¶</a></dt>
+<dd>The player&#8217;s ship, one of SHIP_Xxx.  Use GetShipName() get the ship&#8217;s name as a string.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.squad">
+<tt class="descname">squad</tt><a class="headerlink" href="#SubspaceBot.Player.squad" title="Permalink to this definition">¶</a></dt>
+<dd>The player&#8217;s squad</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.status_antiwarp">
+<tt class="descname">status_antiwarp</tt><a class="headerlink" href="#SubspaceBot.Player.status_antiwarp" title="Permalink to this definition">¶</a></dt>
+<dd>True if the player has AntiWarp on, otherwise False.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.status_cloak">
+<tt class="descname">status_cloak</tt><a class="headerlink" href="#SubspaceBot.Player.status_cloak" title="Permalink to this definition">¶</a></dt>
+<dd>True if the player has cloak on, otherwise False.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.status_flashing">
+<tt class="descname">status_flashing</tt><a class="headerlink" href="#SubspaceBot.Player.status_flashing" title="Permalink to this definition">¶</a></dt>
+<dd>I not know what this indicates.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.status_safezone">
+<tt class="descname">status_safezone</tt><a class="headerlink" href="#SubspaceBot.Player.status_safezone" title="Permalink to this definition">¶</a></dt>
+<dd>True if the player is in a safe area, otherwise False.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.status_stealth">
+<tt class="descname">status_stealth</tt><a class="headerlink" href="#SubspaceBot.Player.status_stealth" title="Permalink to this definition">¶</a></dt>
+<dd>True if the player has stealth on, otherwise False.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.status_ufo">
+<tt class="descname">status_ufo</tt><a class="headerlink" href="#SubspaceBot.Player.status_ufo" title="Permalink to this definition">¶</a></dt>
+<dd>True if the player has UFO toggles, otherwise False.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.status_xradar">
+<tt class="descname">status_xradar</tt><a class="headerlink" href="#SubspaceBot.Player.status_xradar" title="Permalink to this definition">¶</a></dt>
+<dd>True if the player has XRadar on, otherwise False.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.x_pos">
+<tt class="descname">x_pos</tt><a class="headerlink" href="#SubspaceBot.Player.x_pos" title="Permalink to this definition">¶</a></dt>
+<dd>The player&#8217;s X coordinate, in pixels.  This is only as recent as &#8216;last_pos_update_tick.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.x_vel">
+<tt class="descname">x_vel</tt><a class="headerlink" href="#SubspaceBot.Player.x_vel" title="Permalink to this definition">¶</a></dt>
+<dd>The player&#8217;s X velocity.  This is only as recent as &#8216;last_pos_update_tick.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.y_pos">
+<tt class="descname">y_pos</tt><a class="headerlink" href="#SubspaceBot.Player.y_pos" title="Permalink to this definition">¶</a></dt>
+<dd>The player&#8217;s Y coordinate, in pixels.  This is only as recent as &#8216;last_pos_update_tick.</dd></dl>
+
+<dl class="attribute">
+<dt id="SubspaceBot.Player.y_vel">
+<tt class="descname">y_vel</tt><a class="headerlink" href="#SubspaceBot.Player.y_vel" title="Permalink to this definition">¶</a></dt>
+<dd>The player&#8217;s Y velocity.  This is only as recent as &#8216;last_pos_update_tick.</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="subspacebot.html"
+                                  title="previous chapter">SubspaceBot</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="events.html"
+                                  title="next chapter">PythonBot SDK</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/player.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="events.html" title="PythonBot SDK"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="subspacebot.html" title="SubspaceBot"
+             >previous</a> |</li>
+        <li><a href="index.html">PythonBot SDK v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, cycad &lt;cycad@zetasquad.com&gt;.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.5.
+    </div>
+  </body>
+</html>

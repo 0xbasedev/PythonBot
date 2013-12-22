@@ -1,0 +1,6 @@
+SubspaceBot
+===========
+
+.. automodule:: SubspaceBot
+.. autoclass:: SubspaceBot
+   :members:

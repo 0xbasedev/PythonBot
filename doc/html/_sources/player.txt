@@ -1,0 +1,6 @@
+Player
+======
+
+.. automodule:: SubspaceBot
+.. autoclass:: Player
+   :members:

@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PythonBot SDK &mdash; PythonBot SDK v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '1.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PythonBot SDK v1.0 documentation" href="index.html" />
+    <link rel="next" title="Command" href="command.html" />
+    <link rel="prev" title="Player" href="player.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="command.html" title="Command"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="player.html" title="Player"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PythonBot SDK v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-SubspaceBot">
+<h1>PythonBot SDK<a class="headerlink" href="#module-SubspaceBot" title="Permalink to this headline">¶</a></h1>
+<dl class="data">
+<dt id="SubspaceBot.EVENT_TICK">
+<tt class="descclassname">SubspaceBot.</tt><tt class="descname">EVENT_TICK</tt><a class="headerlink" href="#SubspaceBot.EVENT_TICK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Occurs every 1/10th of a second.</p>
+<p>Sets: type</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="SubspaceBot.EVENT_DISCONNECT">
+<tt class="descclassname">SubspaceBot.</tt><tt class="descname">EVENT_DISCONNECT</tt><a class="headerlink" href="#SubspaceBot.EVENT_DISCONNECT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Occurs when the bot disconnects from the server.</p>
+<p>Sets: type</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="SubspaceBot.EVENT_LOGIN">
+<tt class="descclassname">SubspaceBot.</tt><tt class="descname">EVENT_LOGIN</tt><a class="headerlink" href="#SubspaceBot.EVENT_LOGIN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Occurs when the bot logs in to the server.</p>
+<p>At this point, commands and messages can be sent with success.  If the bot needs
+to run any commands automatically on login, this is the time to do that.</p>
+<p>Sets: type</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="SubspaceBot.EVENT_MESSAGE">
+<tt class="descclassname">SubspaceBot.</tt><tt class="descname">EVENT_MESSAGE</tt><a class="headerlink" href="#SubspaceBot.EVENT_MESSAGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates the bot received a message.</p>
+<p>message is the text of the message.  message_type indicates what type of message
+was received, and is one of the MESSAGE_TYPE_Xxx constants.</p>
+<p>Sets: type, message, message_type</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="SubspaceBot.EVENT_ENTER">
+<tt class="descclassname">SubspaceBot.</tt><tt class="descname">EVENT_ENTER</tt><a class="headerlink" href="#SubspaceBot.EVENT_ENTER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates a player entered the arena.</p>
+<p>player is the player who entered.</p>
+<p>A bot will receive an enter event for itself, so to avoid taking action on the
+bot check event.player.pid against bot.pid.</p>
+<p>Sets: type, player</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="SubspaceBot.EVENT_LEAVE">
+<tt class="descclassname">SubspaceBot.</tt><tt class="descname">EVENT_LEAVE</tt><a class="headerlink" href="#SubspaceBot.EVENT_LEAVE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indicates a player left the arena.</p>
+<p>player is the player who left.</p>
+<p>Sets: type, player</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="SubspaceBot.EVENT_CHANGE">
+<tt class="descclassname">SubspaceBot.</tt><tt class="descname">EVENT_CHANGE</tt><a class="headerlink" href="#SubspaceBot.EVENT_CHANGE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Happens when a player changes ship, freq, or both.</p>
+<p>player is the player that changed freq.  old_freq is the player&#8217;s old frequency.
+old_ship is the player&#8217;s old ship. If {freq,ship} didn&#8217;t change, old_{ship,freq}
+are equal.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="SubspaceBot.EVENT_COMMAND">
+<tt class="descclassname">SubspaceBot.</tt><tt class="descname">EVENT_COMMAND</tt><a class="headerlink" href="#SubspaceBot.EVENT_COMMAND" title="Permalink to this definition">¶</a></dt>
+<dd><p>A command was used.</p>
+<p>player is the player that used the command.</p>
+<p>command is the Command object that was used.  arguments are an array, starting
+at the first argument.  arguments_after is an array of an argument and everything
+after it, starting at the first argument. If there are no arguments passed,
+arguments and arguments_after are empty lists.</p>
+<dl class="docutils">
+<dt>For example after the command: !command a b c</dt>
+<dd>arguments = [&#8216;a&#8217;, &#8216;b&#8217;, &#8216;c&#8217;]
+arguments_after = [&#8216;a b c&#8217;, &#8216;b c&#8217;, &#8216;c&#8217;]</dd>
+<dt>This allows you to match players with spaces in their name such as:</dt>
+<dd>!lag C H E E P</dd>
+</dl>
+<p>by using arguments_after[0]</p>
+<p>Sets: type, player, command, arguments, arguments_after.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="SubspaceBot.EVENT_POSITION_UPDATE">
+<tt class="descclassname">SubspaceBot.</tt><tt class="descname">EVENT_POSITION_UPDATE</tt><a class="headerlink" href="#SubspaceBot.EVENT_POSITION_UPDATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A position update was received for player.</p>
+<p>Sets: type, player</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="SubspaceBot.EVENT_KILL">
+<tt class="descclassname">SubspaceBot.</tt><tt class="descname">EVENT_KILL</tt><a class="headerlink" href="#SubspaceBot.EVENT_KILL" title="Permalink to this definition">¶</a></dt>
+<dd><p>A kill event was set.</p>
+<p>killer is the player who did the killing, killed is the player who died.</p>
+<p>Sets: type, killer, killed</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="SubspaceBot.EVENT_ARENA_LIST">
+<tt class="descclassname">SubspaceBot.</tt><tt class="descname">EVENT_ARENA_LIST</tt><a class="headerlink" href="#SubspaceBot.EVENT_ARENA_LIST" title="Permalink to this definition">¶</a></dt>
+<dd><p>An arena list was received.  This is usually in response to sending a pub message
+containing &#8216;?arena&#8217;.</p>
+<p>arena_list is a list of (arena_name, num_players) tuples.</p>
+<p>bot.arena is updated during this event.</p>
+<p>Sets: type, arena_list</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="SubspaceBot.EVENT_TIMER">
+<tt class="descclassname">SubspaceBot.</tt><tt class="descname">EVENT_TIMER</tt><a class="headerlink" href="#SubspaceBot.EVENT_TIMER" title="Permalink to this definition">¶</a></dt>
+<dd><p>A timer has expired.</p>
+<p>id is the ID of the timer, returned by bot.setTimer(), of the timer that expired.
+user_data is the same user_data passed to bot.setTimer() during the timer&#8217;s creation.</p>
+<p>Timers are only granular to 1 second.</p>
+<p>Sets: type, id, user_data</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="player.html"
+                                  title="previous chapter">Player</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="command.html"
+                                  title="next chapter">Command</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/events.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="command.html" title="Command"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="player.html" title="Player"
+             >previous</a> |</li>
+        <li><a href="index.html">PythonBot SDK v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, cycad &lt;cycad@zetasquad.com&gt;.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.5.
+    </div>
+  </body>
+</html>
